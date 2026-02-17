@@ -117,6 +117,18 @@ buttons.forEach(button => {
 
 // Кнопка процент
     if (simbol === 'buttuns_operators_%') {
+        if (itog) {
+            itog = false
+            finalArray = []
+            const proc = Number(numbers.join('')/100)
+            numbers = String(proc).split('')
+            contenteditable[0].innerHTML = numbers.join('')
+            podKapot[0].innerHTML = numbers.join('')
+            itog = false
+            console.log(`Один процент от ${numbers} =`, numbers);
+            return
+        }
+
         if (numbers.length < 1) {return}
         if (Number(numbers[0]) === 0 &&  numbers.length === 1) {
             zero = true
@@ -311,6 +323,20 @@ buttons.forEach(button => {
             console.log('Два разделения? Завязывай')
             return
         }
+
+        if (itog) {
+            itog = false
+            finalArray = []
+            numbers.push('/')
+            finalArray.push(numbers)
+            numbers = [0]
+            podKapot[0].innerHTML = finalArray.join('').split(',').join('')
+            contenteditable[0].innerHTML = numbers.join('')
+            console.log('finalArray', finalArray);
+            console.log('numbers', numbers);
+            return
+        }
+
         numbers.push('/')
         finalArray.push(numbers)
         numbers = [0]
@@ -358,6 +384,20 @@ buttons.forEach(button => {
             console.log('Поумножай ноль мне еще тут')
             return
             ;}
+
+            if (itog) {
+            itog = false
+            finalArray = []
+            numbers.push('*')
+            finalArray.push(numbers)
+            numbers = [0]
+            podKapot[0].innerHTML = finalArray.join('').split(',').join('')
+            contenteditable[0].innerHTML = numbers.join('')
+            console.log('finalArray', finalArray);
+            console.log('numbers', numbers);
+            return
+        }
+
         numbers.push('*')
         finalArray.push(numbers)
         numbers = [0]
@@ -402,6 +442,20 @@ buttons.forEach(button => {
                     }
                     return
             }}
+
+            if (itog) {
+            itog = false
+            finalArray = []
+            numbers.push('-')
+            finalArray.push(numbers)
+            numbers = [0]
+            podKapot[0].innerHTML = finalArray.join('').split(',').join('')
+            contenteditable[0].innerHTML = numbers.join('')
+            console.log('finalArray', finalArray);
+            console.log('numbers', numbers);
+            return
+        }
+
         numbers.push('-')
         finalArray.push(numbers)
         numbers = [0]
@@ -413,6 +467,9 @@ buttons.forEach(button => {
 
 //Кнопка плюс
     if (simbol === 'buttuns_operators_+') {
+        console.log('finalArray', finalArray);
+        console.log('numbers', numbers);
+        
           //Проверка на точку в конце
         if (numbers.at(-1) === '.') {
             console.log('Число заканчивается на точку')
@@ -448,18 +505,34 @@ buttons.forEach(button => {
                     }
                     return
             }}
+        if (itog) {
+            itog = false
+            finalArray = []
+            numbers.push('+')
+            finalArray.push(numbers)
+            numbers = [0]
+            podKapot[0].innerHTML = finalArray.join('').split(',').join('')
+            contenteditable[0].innerHTML = numbers.join('')
+            console.log('finalArray', finalArray);
+            console.log('numbers', numbers);
+            return
+        }
         numbers.push('+')
         finalArray.push(numbers)
         numbers = [0]
         contenteditable[0].innerHTML = numbers.join('')
         podKapot[0].innerHTML = finalArray.join('').split(',').join('')
-        itog = false
+        console.log('finalArray', finalArray);
+        console.log('numbers', numbers);
+        console.log('itog', itog);
         return
     }
 
 // Кнопка равно
     if (simbol === 'buttuns_numbers_=') {
-        if (itog) {return}
+        if (itog) {
+            contenteditable[0].innerHTML = numbers.join('')
+            return}
        //Проверка на точку в конце
         if (numbers.at(-1) === '.') {
             console.log('Число заканчивается на точку')
@@ -501,6 +574,8 @@ buttons.forEach(button => {
         podKapot[0].innerHTML = finalArray.join('').split(',').join('')
         finalArray = []
         itog = true
+        console.log('finalArray', finalArray);
+        console.log('numbers', numbers);
         return
     }
 
