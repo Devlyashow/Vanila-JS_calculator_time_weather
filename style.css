@@ -212,9 +212,10 @@ top: 0;
 }
 
 .WillSmith {
+display: none;
 width: 150%;
 left: -10%;
-top: -25%;
+top: -25;
 rotate: 90deg;
 margin-top: 10px;
 }
