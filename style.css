@@ -257,16 +257,42 @@ rotate: 270deg;
 
 /* CLOCK */
 
-/* .clock_display {
-    width: 150px;
-    height: 50px;
-    background-color: black;
+.clock {
     margin: auto;
     margin-top: 40px;
+    width: 150px;
+    height: 50px;
+}
+
+.clock_display {
+    font-family: 'DigitalClockFont', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    background-color: black;
     border: 2px solid grey;
+    border-bottom: none;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
     color: #00FF00;
-    font-family: 'DigitalClockFont', sans-serif;
     box-sizing: border-box;
-    
-} */
+    font-size: xx-large;
+    margin-bottom: -1px;
+}
+
+/* Date */
+.date_display {
+    font-family: 'DigitalClockFont', sans-serif;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+    background-color: black;
+    border: 2px solid grey;
+    border-top: none;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+    color: #e2e2e2;
+    box-sizing: border-box;
+    font-size: 15px;
+    margin-top: -1px;
+    padding: 5px;
+}
