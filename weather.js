@@ -1,7 +1,3 @@
-async function getWeather(lat, lon) {
-
-    // широта 57.152985, долгота 65.541224
-}
 
 const fetchWeatherData = async () => {
     const apiKey = 'QPCWKJ8ZXH4TFJD2W6WQQCU73'; // API из www.visualcrossing.com
@@ -10,22 +6,25 @@ const fetchWeatherData = async () => {
     const startDate = new Date().toISOString().split('T')[0]; // Формат даты 
     // YYYY-MM-DD
     const contentType = 'json';
-
     const weatherIcon = document.querySelector('.weather_icon') // Иконка погоды
     const weatherDisplay = document.querySelector('.weather_display') // Экран температуры
-    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}?unitGroup=${unitGroup}&key=${apiKey}&contentType=${contentType}`;
+    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${startDate}?unitGroup=${unitGroup}&key=${apiKey}&contentType=${contentType}`; 
 
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
         const weatherData = await response.json();
-        const temp = weatherData.currentConditions.temp; // Температура
-        const iconName = weatherData.currentConditions.icon; // Осадки, облачность.
+console.log('hi', weatherData);
+
+        const temp = weatherData.days[0].temp; // Температура
+        const iconName = weatherData.days[0].icon; // Осадки, облачность.
         const iconUrl = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/3rd%20Set%20-%20Color/${iconName}.png`
         weatherIcon.src = iconUrl
         weatherDisplay.innerHTML = temp
+
         console.log('temp ', temp, 'cloudcover ', cloudcover, 'preciptype', preciptype);
         console.log('Weather Data:', weatherData);
     } catch (error) {
