@@ -6,7 +6,6 @@ const dateDisplay = document.querySelector('.date_display')
 setInterval(function () {
     const date = new Date()
     const day = date.getDay()
-    console.log('day', day);
     
     if (day === 0) {
     dateDisplay.innerHTML = `Воскресенье ${date.toLocaleDateString()}`
