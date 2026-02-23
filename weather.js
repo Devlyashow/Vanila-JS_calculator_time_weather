@@ -19,9 +19,9 @@ const fetchWeatherData = async () => {
         const weatherData = await response.json();
 console.log('hi', weatherData);
 
-        const temp = weatherData.days[0].temp; // Температура
-        const iconName = weatherData.days[0].icon; // Осадки, облачность.
-        const iconUrl = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/3rd%20Set%20-%20Color/${iconName}.png`
+        // const temp = weatherData.days[0].temp; 
+        // const iconName = weatherData.days[0].icon; 
+        const iconUrl = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/3rd%20Set%20-%20Color/snow.png`
         weatherIcon.src = iconUrl
         weatherDisplay.innerHTML = temp
 

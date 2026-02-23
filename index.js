@@ -44,7 +44,16 @@ function calculator(array) {
         }
         result.push(...element)
     }); 
-         return Number(eval(result.join('')))
+    
+    let finalResult = Number(eval(result.join(''))).toFixed(2)
+    console.log('finalResult = ', finalResult, typeof finalResult);
+    
+    if (finalResult.includes('.')) {
+        if (finalResult.at(-1) === '0' && finalResult.at(-2) === '0') {
+            return Number(Math.trunc(finalResult))
+        } else return Number(finalResult)
+    }
+         return Number(finalResult)
    
 }
 
