@@ -28,6 +28,92 @@ const sounds = [
   'audio/Buttons/Ravno.mp3',
 ];
 
+// Функция для удаления из истории строчки
+function deleteStringOfHistori(id) {
+    const card = document.getElementsByClassName(id)
+    let history = JSON.parse(localStorage.history) 
+    delete history[id]
+    localStorage.history = JSON.stringify(history)
+    card[0].remove()
+    return
+}
+
+// Функция создающая html в истории
+function setNewDiv (date, calculation, id) {
+    // Находим div, в котором будет список div(ов) 
+    const parentDiv = document.getElementsByClassName('history_text')[0]
+    // Создаем див, объединяющий инфу и кнопку
+    const divCard = document.createElement('div')
+    divCard.classList.add('history_text_card')
+    divCard.classList.add(`${id}`)
+    // Создаем div (вычисление)
+    const divCalculation = document.createElement('div')
+    divCalculation.classList.add('history_text_calculation')
+    divCalculation.textContent = calculation
+    divCard.prepend(divCalculation)
+    // Создаем div (дата и время)
+    const divDate = document.createElement('div')
+    divDate.classList.add('history_text_date')
+    divDate.textContent = date
+    divCard.prepend(divDate)
+    // Создаем кнопку удаления
+    const newButton = document.createElement('button')
+    newButton.classList.add('history_text_button')
+    newButton.id = id
+    divCard.prepend(newButton)
+    parentDiv.prepend(divCard)
+
+ 
+    
+    newButton.addEventListener('click',()=>{
+       deleteStringOfHistori(id)
+    } )
+}
+
+// Функция, вытаскивающая из localStorage пункты и вставляющая их в html
+function fromLocalStorage(params) {
+    if (localStorage.history) {
+        const historyOnLocalStorage = Object.entries(JSON.parse(localStorage.history));
+        historyOnLocalStorage.forEach((array)=>{
+            console.log(array[0]);
+            setNewDiv(Object.keys(array[1]), Object.values(array[1]), array[0])
+        })
+        return
+    } else {
+        console.log('История пуста');
+        return
+    }
+}
+fromLocalStorage()
+
+// Функция записи в историю по кнопке равно
+function toHistory (podKapot, result) {
+    const tooday = new Date()
+    const date = tooday.toLocaleDateString('ru-RU', { 
+    month: 'numeric',
+    day: 'numeric'
+});
+    const time = tooday.toLocaleTimeString()
+    const calculation = `${podKapot} = `+result
+    const newKey = `${date} ${time} `
+    const id = new Date().getTime()
+    const newObject = {[newKey]: calculation,}
+
+    if (localStorage.getItem('history')) {
+        const history = localStorage.getItem('history')
+        let historyParse = JSON.parse(history)
+        historyParse[id] = newObject
+        localStorage.history = JSON.stringify(historyParse)
+        setNewDiv(newKey, calculation, id)
+        return
+    } else {
+        localStorage.setItem('history', JSON.stringify({[id]:newObject}))
+        setNewDiv(newKey, calculation, id)
+        return 
+    }
+     
+} 
+
 //! Функция подсчета
 function calculator(array) {
     let result = []
@@ -54,8 +140,39 @@ function calculator(array) {
         } else return Number(finalResult)
     }
          return Number(finalResult)
-   
 }
+
+// Открытие и закрытие истории
+const historyStrelka = document.getElementsByClassName('history_strelka')
+const history = document.getElementsByClassName('history')
+historyStrelka[0].addEventListener('click', ()=>{
+    const audio = new Audio('audio/history.mp3')
+    audio.volume = 0.4
+    audio.play().catch(error => console.log('Звук заблокирован:', error));
+    
+    if (historyStrelka[0].classList.contains('history_strelka_active')) {
+        historyStrelka[0].src = 'img/history_strelka_down.png'
+        historyStrelka[0].classList.remove('history_strelka_active')
+        history[0].classList.remove('history_active')
+    } else {
+        historyStrelka[0].classList.add('history_strelka_active')
+        historyStrelka[0].src = 'img/history_strelka_up.png'
+        history[0].classList.add('history_active')
+        return
+    }
+    
+})
+// Очистка истории
+document.getElementsByClassName('history_clear')[0].addEventListener('click', ()=>{
+    const history = localStorage.getItem('history')
+    let parseHistory = JSON.parse(history)
+    if (Object.keys(parseHistory).length > 0) {
+        localStorage.history = JSON.stringify({})
+        document.getElementsByClassName('history_text')[0].innerHTML = ''
+    } else {return}
+    
+})
+
 
 //! Слушатель событий на все кнопки
 buttons.forEach(button => {
@@ -68,7 +185,6 @@ buttons.forEach(button => {
     const randomIndex = Math.floor(Math.random() * sounds.length);
     const audio = new Audio(sounds[randomIndex]);
     audio.play().catch(error => console.log('Звук заблокирован:', error));
-        
 // Кнопка включения и выключения калькулятора
         if (simbol === 'buttons_up-line_of-on') {
             zero = false
@@ -78,6 +194,7 @@ buttons.forEach(button => {
             podKapot[0].innerHTML = ''
             podKapot[0].classList.remove('active')
             const audio = new Audio('audio/podKapot.mp3')
+            audio.volume = 0.5
             audio.play()          
             return
           } else {
@@ -87,6 +204,7 @@ buttons.forEach(button => {
             finalArray = []
             podKapot[0].classList.add('active')
             const audio = new Audio('audio/podKapot.mp3')
+            audio.volume = 0.5
             audio.play()
           }
           return
@@ -125,7 +243,7 @@ buttons.forEach(button => {
     }
 
 // Кнопка процент
-    if (simbol === 'buttuns_operators_%') {
+    if (simbol === 'buttons_operators_%') {
         if (itog) {
             itog = false
             finalArray = []
@@ -356,7 +474,7 @@ buttons.forEach(button => {
     }
 
 // Кнопка умножить
-    if (simbol === 'buttuns_operators_x') {
+    if (simbol === 'buttons_operators_x') {
         if (numbers.at(-1) === '.') {
             console.log('Число заканчивается на точку')
             return
@@ -417,7 +535,7 @@ buttons.forEach(button => {
     }
 
 // Кнопка минус
-    if (simbol === 'buttuns_operators_-') {
+    if (simbol === 'buttons_operators_-') {
         //Проверка на точку в конце
         if (numbers.at(-1) === '.') {
             console.log('Число заканчивается на точку')
@@ -475,7 +593,7 @@ buttons.forEach(button => {
     }
 
 //Кнопка плюс
-    if (simbol === 'buttuns_operators_+') {
+    if (simbol === 'buttons_operators_+') {
         console.log('finalArray', finalArray);
         console.log('numbers', numbers);
         
@@ -538,7 +656,7 @@ buttons.forEach(button => {
     }
 
 // Кнопка равно
-    if (simbol === 'buttuns_numbers_=') {
+    if (simbol === 'buttons_numbers_=') {
         if (itog) {
             contenteditable[0].innerHTML = numbers.join('')
             return}
@@ -585,6 +703,7 @@ buttons.forEach(button => {
         itog = true
         console.log('finalArray', finalArray);
         console.log('numbers', numbers);
+        toHistory(podKapot[0].textContent, numbers.join(''))
         return
     }
 
