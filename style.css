@@ -348,88 +348,6 @@ align-items: center;
     transition: 0.5s;
 }
 
-
-
-
-@media (max-width: 1440px) {
-.calculator {
-  width: 50%;
-}
-.WillSmith {
-width: 150%;
-left: -50%;
-top: 0;
-
-}
-
-.WillSmith-right {
-width: 150%;
-left: 0;
-top: 0;
-}
-}
-
-
-@media (max-width: 768px) {
-.calculator {
-  width: 90%;
-}
-
-.WillSmith {
-display: none;
-width: 150%;
-left: -10%;
-top: -25%;
-rotate: 90deg;
-margin-top: 10px;
-}
-
-.WillSmith-right {
-width: 150%;
-left: -10%;
-bottom: 10%;
-rotate: 90deg;
-margin-bottom: 10px;
-}
-}
-
-@media (max-width: 500px) {
-.WillSmith-right {
-width: 150%;
-left: -10%;
-bottom: 0;
-top: 25%;
-rotate: 90deg;
-margin-bottom: 10px;
-}
-}
-
-@media (max-width: 366px) {
-.calculator {
-  width: 90%;
-}
-
-.buttons_up-line {
-    height: 25px;
-}
-
-.display {
-    margin-bottom: -2px;
-}
-.WillSmith {
-left: 0;
-top: 30%;
-left: -20%;
-rotate: 270deg;
-}
-
-.WillSmith-right {
-left: -20%;
-top: -20%;
-rotate: 270deg;
-}
-}
-
 /* CLOCK */
 
 .clock {
@@ -506,5 +424,92 @@ rotate: 270deg;
     z-index: 1;
     background-color: #00f7ff85;
     border-radius: 50%;
+}
+
+
+@media (max-width: 1440px) {
+
+.clock {
+    margin: auto;
+    margin-top: 10px;
+}
+
+.calculator {
+  width: 50%;
+}
+.WillSmith {
+width: 150%;
+left: -50%;
+top: 0;
+display: none;
+}
+
+.WillSmith-right {
+width: 150%;
+left: 0;
+top: 0;
+display: none;
+}
+}
+
+
+@media (max-width: 768px) {
+.calculator {
+  width: 90%;
+}
+
+.WillSmith {
+display: none;
+width: 150%;
+left: -10%;
+top: -25%;
+rotate: 90deg;
+margin-top: 10px;
+}
+
+.WillSmith-right {
+width: 150%;
+left: -10%;
+bottom: 10%;
+rotate: 90deg;
+margin-bottom: 10px;
+}
+}
+
+@media (max-width: 500px) {
+.WillSmith-right {
+width: 150%;
+left: -10%;
+bottom: 0;
+top: 25%;
+rotate: 90deg;
+margin-bottom: 10px;
+}
+}
+
+@media (max-width: 366px) {
+.calculator {
+  width: 90%;
+}
+
+.buttons_up-line {
+    height: 25px;
+}
+
+.display {
+    margin-bottom: -2px;
+}
+.WillSmith {
+left: 0;
+top: 30%;
+left: -20%;
+rotate: 270deg;
+}
+
+.WillSmith-right {
+left: -20%;
+top: -20%;
+rotate: 270deg;
+}
 }
 
