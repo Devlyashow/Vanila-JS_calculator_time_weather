@@ -28,6 +28,25 @@ const sounds = [
   'audio/Buttons/Ravno.mp3',
 ];
 
+const audioPool = sounds.map(src => {
+    const pool = [];
+    for (let i = 0; i < 4; i++) {
+        const audio = new Audio(src);
+        audio.preload = 'auto';
+        pool.push(audio);
+    }
+    return pool;
+});
+
+function playRandomSound() {
+    const randomIndex = Math.floor(Math.random() * audioPool.length);
+    const pool = audioPool[randomIndex];
+
+    const audio = pool.find(item => item.paused || item.ended) || pool[0];
+    audio.currentTime = 0;
+    audio.play().catch(error => console.log('Звук заблокирован:', error));
+}
+
 // Функция для удаления из истории строчки
 function deleteStringOfHistori(id) {
     const card = document.getElementsByClassName(id)
@@ -182,9 +201,7 @@ buttons.forEach(button => {
         const simbol = event.target.className
         const idSimbol = event.target.id
     // Звуки кнопок
-    const randomIndex = Math.floor(Math.random() * sounds.length);
-    const audio = new Audio(sounds[randomIndex]);
-    audio.play().catch(error => console.log('Звук заблокирован:', error));
+    playRandomSound();
 // Кнопка включения и выключения калькулятора
         if (simbol === 'buttons_up-line_of-on') {
             zero = false
