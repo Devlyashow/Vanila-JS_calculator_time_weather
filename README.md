@@ -4,3 +4,5 @@
 
 
 [Ссылка на лендинг](https://devlyashow.github.io/Vanila-JS_calculator_time_weather/)
+
+![Обложка](img/ForReadme.png)
